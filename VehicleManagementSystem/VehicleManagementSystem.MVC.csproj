@@ -6,4 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\VehicleManagementSystem.Service\VehicleManagementSystem.Service.csproj" />
+  </ItemGroup>
+
 </Project>
