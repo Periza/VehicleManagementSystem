@@ -1,7 +1,11 @@
+using System.Configuration;
+using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Project.Service.Data;
+using VehicleManagementSystem.Service.SettingModels;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -9,20 +13,19 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
 
-
 builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options =>
 {
-    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
-    // options.UseInMemoryDatabase(databaseName: "InMemoryDb");
+    // options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
+    options.UseInMemoryDatabase(databaseName: "InMemoryDb");
 });
 
 builder.Services.AddRazorPages();
 
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(setupAction: options =>
     {
-        options.User.RequireUniqueEmail = false;
+        options.User.RequireUniqueEmail = true;
 
-        options.SignIn.RequireConfirmedAccount = false;
+        options.SignIn.RequireConfirmedAccount = true;
     })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
@@ -30,6 +33,8 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(setupAction: options =>
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddEmail(builder.Configuration);
 
 var app = builder.Build();
 
@@ -48,11 +53,11 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated(); // This will trigger OnModelCreating
 }
 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
 
 app.UseAuthentication();
 app.UseAuthorization();
