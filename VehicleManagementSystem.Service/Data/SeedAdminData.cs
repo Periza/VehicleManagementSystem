@@ -22,8 +22,8 @@ public static class SeedAdminData
             // If it does not exist, create it
             adminUser = new IdentityUser()
             {
-                UserName = "admin",
-                Email = "admin@exampl.com",
+                UserName = "admin@example.com",
+                Email = "admin@example.com",
                 EmailConfirmed = true
             };
 
