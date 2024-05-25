@@ -1,10 +1,7 @@
 using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Microsoft.CodeAnalysis.Options;
-using Microsoft.CodeAnalysis.QuickInfo;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using MimeKit.Text;
 using VehicleManagementSystem.Service.SettingModels;
 
 namespace Project.Service.Data;
