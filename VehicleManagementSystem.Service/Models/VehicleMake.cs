@@ -5,7 +5,7 @@ namespace VehicleManagementSystem.Service.Models;
 public record VehicleMake
 {
     [Key] 
-    public int Id;
+    public int Id { get; set; }
 
     public string Name { get; set; } = string.Empty;
 
