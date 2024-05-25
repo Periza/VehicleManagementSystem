@@ -16,4 +16,9 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AdditionalFiles Include="Areas\Customer\Views\Home\Index.cshtml" />
+    <AdditionalFiles Include="Areas\Customer\Views\Home\Privacy.cshtml" />
+  </ItemGroup>
+
 </Project>
