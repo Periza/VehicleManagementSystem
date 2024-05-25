@@ -8,16 +8,24 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options =>
 {
-    options.UseInMemoryDatabase(databaseName: "InMemoryDb");
+    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
+    // options.UseInMemoryDatabase(databaseName: "InMemoryDb");
 });
 
 builder.Services.AddRazorPages();
 
-builder.Services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>(setupAction: options =>
+    {
+        options.User.RequireUniqueEmail = false;
 
-
+        options.SignIn.RequireConfirmedAccount = false;
+    })
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 
 
 // Add services to the container.
@@ -35,6 +43,7 @@ if (!app.Environment.IsDevelopment())
 
 using (var scope = app.Services.CreateScope())
 {
+    await app.Services.InitializeAsync();
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.EnsureCreated(); // This will trigger OnModelCreating
 }
