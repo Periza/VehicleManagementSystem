@@ -50,7 +50,7 @@ public class VehicleRepository : IVehicleRepository
     // Model methods
     public async Task<IEnumerable<VehicleModel>> GetAllModelsAsync()
     {
-        return await _dbContext.VehicleModels.ToListAsync();
+        return await _dbContext.VehicleModels.Include(vm => vm.Make).ToListAsync();
     }
 
     public async Task<Optional<VehicleModel>> GetModelByIdAsync(int id)
