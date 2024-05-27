@@ -6,20 +6,27 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Project.Service.Data;
 using VehicleManagementSystem.Service.MappingProfiles;
+using VehicleManagementSystem.Service.Repositories;
+using VehicleManagementSystem.Service.Services.Vehicle;
 using VehicleManagementSystem.Service.SettingModels;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Use Autofac DI
-builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+    .ConfigureContainer<ContainerBuilder>(containerBuilder =>
+    {
+        containerBuilder.RegisterType<VehicleRepository>().As<IVehicleRepository>().InstancePerLifetimeScope();
+        containerBuilder.RegisterType<VehicleService>().As<IVehicleService>().InstancePerLifetimeScope();
+    });
 
 builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options =>
 {
-    // options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
-    options.UseInMemoryDatabase(databaseName: "InMemoryDb");
+    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
+    // options.UseInMemoryDatabase(databaseName: "InMemoryDb");
 });
 
 builder.Services.AddRazorPages();
