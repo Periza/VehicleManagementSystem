@@ -1,0 +1,39 @@
+@using Microsoft.IdentityModel.Tokens
+@model IEnumerable<VehicleModelViewModel>
+
+@{
+    ViewData["Title"] = "Vehicles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<p>Vehicles</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Make</th>
+            <th>Model</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.IsNullOrEmpty())
+        {
+            <tr>
+                <td colspan="2" class="text-center">No vehicles available</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (VehicleModelViewModel item in Model)
+            {
+                <tr>
+                    <td>@item.Make.Name</td>
+                    <td>@item.Name</td>
+                </tr>
+            }
+        }
+        
+        </tbody>
+</table>
