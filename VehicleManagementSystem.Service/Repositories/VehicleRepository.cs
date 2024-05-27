@@ -46,7 +46,8 @@ public class VehicleRepository : IVehicleRepository
             await _dbContext.SaveChangesAsync();
         }
     }
-
+    
+    // Model methods
     public async Task<IEnumerable<VehicleModel>> GetAllModelsAsync()
     {
         return await _dbContext.VehicleModels.ToListAsync();

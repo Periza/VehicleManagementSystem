@@ -12,7 +12,7 @@ public readonly struct Optional<T>
         _value = value;
     }
 
-    public static Optional<T> Of(T value) => new Optional<T>(value: value);
+    public static Optional<T> Of(T value) => new(value: value);
     
     // Instance of this struct with all its fields set to their default values.
     public static Optional<T> Empty() => default;
@@ -32,5 +32,5 @@ public readonly struct Optional<T>
         }
     }
     
-    public T OrElse(T defaultValue) => HasValue ?_value : defaultValue;
+    public T OrElse(T defaultValue) => HasValue ? _value : defaultValue;
 }
