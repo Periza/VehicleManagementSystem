@@ -5,13 +5,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Project.Service.Data;
+using VehicleManagementSystem.Service.MappingProfiles;
 using VehicleManagementSystem.Service.SettingModels;
 
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+// Use Autofac DI
 builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
 
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options =>
 {
@@ -31,10 +34,12 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(setupAction: options =>
 .AddDefaultTokenProviders();
 
 
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddEmail(builder.Configuration);
+
 
 var app = builder.Build();
 
