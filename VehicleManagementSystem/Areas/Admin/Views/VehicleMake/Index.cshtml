@@ -1,0 +1,42 @@
+@model IEnumerable<VehicleMakeViewModel>
+
+
+@{
+    ViewData["Title"] = "Vehicle Makes";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Abbreviation</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @if (Model.IsNullOrEmpty())
+    {
+        <tr>
+            <td colspan="2" class="text-center">No vehicle makes available</td>
+        </tr>
+    }
+    else
+    {
+        @foreach (VehicleMakeViewModel item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Abrv</td>
+                <td>
+                    <a href="@Url.Action("", controller: "VehicleMake", values: new { id = item.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Delete", controller: "VehicleMake", values: new { id = item.Id })" class="btn btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    }
+        
+    </tbody>
+</table>
