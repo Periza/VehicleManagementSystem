@@ -40,7 +40,7 @@ public class VehicleService : IVehicleService
         VehicleMake make = _mapper.Map<VehicleMake>(source: makeViewModel);
         await _vehicleRepository.AddMakeAsync(make: make);
     }
-
+    
     public async Task UpdateMakeAsync(VehicleMakeViewModel makeViewModel)
     {
         VehicleMake make = _mapper.Map<VehicleMake>(makeViewModel);
@@ -72,6 +72,11 @@ public class VehicleService : IVehicleService
         await _vehicleRepository.AddModelAsync(vehicleModel: model);
     }
 
+    public async Task UpdateModelAsync(VehicleModelViewModel vmViewModel)
+    {
+        VehicleModel model = _mapper.Map<VehicleModel>(vmViewModel);
+        await _vehicleRepository.AddModelAsync(vehicleModel: model);
+    }
     public async Task DeleteModelAsync(int id)
     {
         await _vehicleRepository.DeleteModelAsync(id: id);
