@@ -32,10 +32,34 @@
             </a>
         </th>
         <th>
-            Abbreviation
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.AbrvSortParam">
+                Abbreviation
+                @{
+                    if (sortBy is "abrv_desc")
+                    {
+                        <i class="bi bi-arrow-down"></i>
+                    }
+                    else if (sortBy is "abrv_asc")
+                    {
+                        <i class="bi bi-arrow-up"></i>
+                    }
+                }
+            </a>
         </th>
         <th>
-            Make
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.MakeSortParam">
+                Make
+                @{
+                    if (sortBy is "make_desc")
+                    {
+                        <i class="bi bi-arrow-down"></i>
+                    }
+                    else if (sortBy is "make_asc")
+                    {
+                        <i class="bi bi-arrow-up"></i>
+                    }
+                }
+            </a>
         </th>
         <th>
             Actions

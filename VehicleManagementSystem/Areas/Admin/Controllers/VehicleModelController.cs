@@ -39,11 +39,12 @@ public class VehicleModelController : Controller
         {
             "make_asc" => "make_desc",
             "make_desc" => "",
-            _ => "make_desc"
+            _ => "make_asc"
         };
 
         ViewBag.NameSortParam = nameSort;
         ViewBag.AbrvSortParam = abrvSort;
+        ViewBag.MakeSortParam = makeSort;
         
         return View(model: await _vehicleService.GetModelsPaginatedAsync("", sortBy: sortBy,1, 20));
     }
