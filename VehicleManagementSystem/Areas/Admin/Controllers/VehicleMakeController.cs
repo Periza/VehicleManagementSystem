@@ -69,13 +69,13 @@ public class VehicleMakeController : Controller
             {
                 if (vmViewModel.Id is 0)
                 {
-                    TempData["success"] = "Vehicle Make added successfully!";
                     await _vehicleService.AddMakeAsync(vmViewModel);
+                    TempData["success"] = "Vehicle Make added successfully!";
                 }
                 else
                 {
-                    TempData["success"] = "Vehicle Make updated successfully!";
                     await _vehicleService.UpdateMakeAsync(vmViewModel);
+                    TempData["success"] = "Vehicle Make updated successfully!";
                 }
             }
         }

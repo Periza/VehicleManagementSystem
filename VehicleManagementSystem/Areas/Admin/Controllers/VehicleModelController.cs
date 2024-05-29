@@ -36,6 +36,32 @@ public class VehicleModelController : Controller
 
         return View(vmOptional.Value);
     }
+
+    public async Task<IActionResult> Upsert(VehicleModelViewModel vmViewModel)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                if (vmViewModel.Id is 0)
+                {
+                    await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
+                    TempData["success"] = "Vehicle Model added successfully!";
+                }
+                else
+                {
+                    await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
+                    TempData["success"] = "Vehicle Model update successfully!";
+                }
+            }
+        }
+        catch
+        {
+            TempData["error"] = $"Error while {(vmViewModel.Id is 0 ? "creating" : "updating")} vehicle model";
+        }
+        
+        return RedirectToAction(actionName: nameof(Index));
+    }
     
     public async Task<IActionResult> Delete(int id)
     {
