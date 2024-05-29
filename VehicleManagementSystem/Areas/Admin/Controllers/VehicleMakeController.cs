@@ -35,14 +35,10 @@ public class VehicleMakeController : Controller
             "abrv_desc" => "",
             _ => "abrv_asc"
         };
-        
-        ViewData["CurrentSort"] = sortOrder;
 
         ViewData["NameSortParam"] = nameSort;
         ViewData["AbrvSortParam"] = abrvSort;
         
-        // FILTERING
-        ViewData["CurrentFilter"] = searchString;
         
         PaginatedList<VehicleMakeViewModel> models = await _vehicleService.GetMakesPaginatedAsync(sortOrder: sortOrder, searchString: searchString, pageNumber: pageNumber);
         return View(models);

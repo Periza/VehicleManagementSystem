@@ -24,6 +24,10 @@
     </div>
 </form>
 
+<div class="mb-3">
+    <a href="@Url.Action("Upsert", controller: "VehicleMake")" class="btn btn-success">Create</a>
+</div>
+
 <table class="table">
     <thead>
     <tr>
@@ -91,18 +95,18 @@
 }
 
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-sortOrder="@sortOrder"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@(ViewData["CurrentFilter"])}"
+   asp-route-currentFilter="@currentFilter)}"
    class="btn btn-default @prevDisabled"
 >
     Previous
 </a>
 
 <a asp-action="Index"
-   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-sortOrder="@sortOrder"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   asp-route-currentFilter="@currentFilter"
    class="btn btn-default @nextDisabled">
     Next
 </a>
