@@ -18,7 +18,7 @@ public class VehicleMakeController : Controller
         _vehicleService = vehicleService;
     }
 
-    public async Task<IActionResult> Index(string sortOrder, string searchString)
+    public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber)
     {
         //SORTING
         // Toggle sort order based on the current state
@@ -35,6 +35,8 @@ public class VehicleMakeController : Controller
             "abrv_desc" => "",
             _ => "abrv_asc"
         };
+        
+        ViewData["CurrentSort"] = sortOrder;
 
         ViewData["NameSortParam"] = nameSort;
         ViewData["AbrvSortParam"] = abrvSort;
@@ -42,7 +44,7 @@ public class VehicleMakeController : Controller
         // FILTERING
         ViewData["CurrentFilter"] = searchString;
         
-        IEnumerable<VehicleMakeViewModel> models = await _vehicleService.GetMakesPaginatedAsync(sortOrder: sortOrder, searchString: searchString);
+        PaginatedList<VehicleMakeViewModel> models = await _vehicleService.GetMakesPaginatedAsync(sortOrder: sortOrder, searchString: searchString, pageNumber: pageNumber);
         return View(models);
     }
     

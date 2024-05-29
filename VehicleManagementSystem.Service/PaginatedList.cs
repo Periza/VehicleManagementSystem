@@ -4,20 +4,40 @@ namespace VehicleManagementSystem.Service;
 
 public class PaginatedList<T> : List<T>
 {
-    public int PageIndex { get; private set; }
-    public int TotalPages { get; private set; }
+    private bool _hasPreviousPage;
+    private bool _hasNextPage;
+    
+    public int PageIndex { get; set; }
+    public int TotalPages { get; set; }
 
+    public PaginatedList()
+    {
+        
+    }
     public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
     {
         PageIndex = pageIndex;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);
 
         this.AddRange(items);
+        
+        HasPreviousPage = PageIndex > 1;
+        HasNextPage = PageIndex < TotalPages;
     }
 
-    public bool HasPreviousPage => PageIndex > 1;
 
-    public bool HasNextPage => PageIndex < TotalPages;
+    public bool HasPreviousPage
+    {
+        get => _hasPreviousPage;
+        set => _hasPreviousPage = value;
+    }
+    
+    public bool HasNextPage
+    {
+        get => _hasNextPage;
+        set => _hasNextPage = value;
+    }
+    
 
     public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
     {

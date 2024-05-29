@@ -18,7 +18,7 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.VehicleMakes.ToListAsync();
     }
 
-    public Task<IEnumerable<VehicleMake>> GetMakesPaginatedAsync(string sortOrder, string searchString)
+    public async Task<PaginatedList<VehicleMake>> GetMakesPaginatedAsync(string sortOrder, string searchString, int? pageNumber)
     {
         IQueryable<VehicleMake> makes = _dbContext.VehicleMakes.AsNoTracking().AsQueryable();
 
@@ -36,7 +36,11 @@ public class VehicleRepository : IVehicleRepository
             makes = makes.Where(make => make.Name.Contains(searchString) || make.Abrv.Contains(searchString));
         }
 
-        return Task.FromResult(makes.AsEnumerable());
+        int pageSize = 3;
+
+
+        return await PaginatedList<VehicleMake>.CreateAsync(source: makes, pageIndex: pageNumber ?? 1,
+            pageSize: pageSize);
     }
 
     public async Task<Optional<VehicleMake>> GetMakeByIdAsync(int id)
