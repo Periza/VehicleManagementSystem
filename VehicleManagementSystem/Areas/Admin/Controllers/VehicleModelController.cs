@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using VehicleManagementSystem.Service;
 using VehicleManagementSystem.Service.Services.Vehicle;
+using VehicleManagementSystem.Service.ViewModels;
 
 namespace VehicleManagementSystem.MVC.Areas.Admin.Controllers;
 
@@ -20,6 +22,21 @@ public class VehicleModelController : Controller
         return View(model: await _vehicleService.GetModelsPaginatedAsync("", "",1, 5));
     }
 
+    public async Task<IActionResult> Upsert(int? id = null) // Update insert
+    {
+        if (id is null or 0)
+        {
+            VehicleModelViewModel vmViewModel = new();
+            return View(vmViewModel);
+        }
+
+        Optional<VehicleModelViewModel> vmOptional = await _vehicleService.GetModelByIdAsync(id: id.Value);
+        if (!vmOptional.HasValue)
+            return NotFound();
+
+        return View(vmOptional.Value);
+    }
+    
     public async Task<IActionResult> Delete(int id)
     {
         try
