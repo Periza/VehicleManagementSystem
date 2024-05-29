@@ -24,36 +24,56 @@ public class VehicleModelController : Controller
 
     public async Task<IActionResult> Upsert(int? id = null) // Update insert
     {
+        IEnumerable<VehicleMakeViewModel> avaiableMakes = await _vehicleService.GetAllMakesAsync();
         if (id is null or 0)
         {
-            VehicleModelViewModel vmViewModel = new();
+            VehicleModelViewModel vmViewModel = new()
+            {
+                AvaiableMakes = avaiableMakes
+            };
             return View(vmViewModel);
         }
 
         Optional<VehicleModelViewModel> vmOptional = await _vehicleService.GetModelByIdAsync(id: id.Value);
+        vmOptional.Value.AvaiableMakes = avaiableMakes;
         if (!vmOptional.HasValue)
             return NotFound();
 
         return View(vmOptional.Value);
     }
 
+    [HttpPost]
     public async Task<IActionResult> Upsert(VehicleModelViewModel vmViewModel)
     {
         try
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                if (vmViewModel.Id is 0)
-                {
-                    await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
-                    TempData["success"] = "Vehicle Model added successfully!";
-                }
-                else
-                {
-                    await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
-                    TempData["success"] = "Vehicle Model update successfully!";
-                }
+                vmViewModel.AvaiableMakes = await _vehicleService.GetAllMakesAsync();
+                return View(model: vmViewModel);
             }
+            
+            // Check if the selected MakeId exists
+            // Could be deleted between get and post
+            Optional<VehicleMakeViewModel> makeExists = await _vehicleService.GetMakeByIdAsync(vmViewModel.MakeId);
+            if (!makeExists.HasValue)
+            {
+                ModelState.AddModelError(key: "MakeId", errorMessage: "The selected vehicle make does not exist.");
+                vmViewModel.AvaiableMakes = await _vehicleService.GetAllMakesAsync();
+                return View(vmViewModel);
+            }
+            
+            if (vmViewModel.Id is 0)
+            {
+                await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
+                TempData["success"] = "Vehicle Model added successfully!";
+            }
+            else
+            {
+                await _vehicleService.AddModelAsync(vmViewModel: vmViewModel);
+                TempData["success"] = "Vehicle Model updated successfully!";
+            }
+            
         }
         catch
         {
