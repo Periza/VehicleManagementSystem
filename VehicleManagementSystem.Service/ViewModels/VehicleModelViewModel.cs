@@ -12,7 +12,7 @@ public class VehicleModelViewModel
     [StringLength(maximumLength: 100, ErrorMessage = "Name cannot be longer than 100 characters.")]
     public string Name { get; set; } = string.Empty;
     [Required]
-    [StringLength(maximumLength: 100, ErrorMessage = "Name cannot be longer than 100 characters.")]
+    [StringLength(maximumLength: 10, ErrorMessage = "Abbreviation cannot be longer than 10 characters")]
     public string Abrv { get; set; } = string.Empty;
     public VehicleMake Make { get; set; } 
 }
