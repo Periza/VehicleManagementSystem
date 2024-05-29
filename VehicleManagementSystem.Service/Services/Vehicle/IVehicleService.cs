@@ -6,7 +6,7 @@ namespace VehicleManagementSystem.Service.Services.Vehicle;
 public interface IVehicleService
 {
     Task<IEnumerable<VehicleMakeViewModel>> GetAllMakesAsync();
-    Task<IEnumerable<VehicleMakeViewModel>> GetMakesPaginatedAsync(string sortOrder);
+    Task<IEnumerable<VehicleMakeViewModel>> GetMakesPaginatedAsync(string sortOrder, string searchString);
     Task<Optional<VehicleMakeViewModel>> GetMakeByIdAsync(int id);
     Task AddMakeAsync(VehicleMakeViewModel makeViewModel);
     Task UpdateMakeAsync(VehicleMakeViewModel makeViewModel);

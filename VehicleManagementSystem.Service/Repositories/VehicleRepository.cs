@@ -18,7 +18,7 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.VehicleMakes.ToListAsync();
     }
 
-    public Task<IEnumerable<VehicleMake>> GetMakesPaginatedAsync(string sortOrder)
+    public Task<IEnumerable<VehicleMake>> GetMakesPaginatedAsync(string sortOrder, string searchString)
     {
         IQueryable<VehicleMake> makes = _dbContext.VehicleMakes.AsNoTracking().AsQueryable();
 
@@ -30,6 +30,11 @@ public class VehicleRepository : IVehicleRepository
             "abrv_desc" => makes.OrderByDescending(vm => vm.Abrv),
             _ => makes
         };
+
+        if (!string.IsNullOrEmpty(searchString))
+        {
+            makes = makes.Where(make => make.Name.Contains(searchString) || make.Abrv.Contains(searchString));
+        }
 
         return Task.FromResult(makes.AsEnumerable());
     }
