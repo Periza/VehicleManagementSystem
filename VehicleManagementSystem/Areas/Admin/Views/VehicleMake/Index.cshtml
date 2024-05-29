@@ -31,7 +31,7 @@
                 <td>@item.Name</td>
                 <td>@item.Abrv</td>
                 <td>
-                    <a href="@Url.Action("", controller: "VehicleMake", values: new { id = item.Id })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("Upsert", controller: "VehicleMake", values: new { id = item.Id })" class="btn btn-primary">Edit</a>
                     <a href="@Url.Action("Delete", controller: "VehicleMake", values: new { id = item.Id })" class="btn btn-danger">Delete</a>
                 </td>
             </tr>
