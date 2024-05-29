@@ -15,4 +15,7 @@ public class VehicleModelViewModel
     [StringLength(maximumLength: 10, ErrorMessage = "Abbreviation cannot be longer than 10 characters")]
     public string Abrv { get; set; } = string.Empty;
     public VehicleMake Make { get; set; } 
+    
+    // list of makes for the dropdown
+    public IEnumerable<VehicleMakeViewModel> AvaiableMakes { get; set; }
 }

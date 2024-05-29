@@ -14,4 +14,5 @@ public class VehicleMakeViewModel
     [Required]
     [StringLength(maximumLength: 10, ErrorMessage = "Abbreviation cannot be longer than 10 characters")]
     public string Abrv { get; set; } = string.Empty;
+    
 }
