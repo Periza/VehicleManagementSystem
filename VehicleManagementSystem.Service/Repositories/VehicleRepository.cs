@@ -83,6 +83,16 @@ public class VehicleRepository : IVehicleRepository
         VehicleModel? model = await _dbContext.VehicleModels.FindAsync(id);
         return model is not null ? Optional<VehicleModel>.Of(model) : Optional<VehicleModel>.Empty();
     }
+    
+    public async Task DeleteModelAsync(int id)
+    {
+        VehicleModel? model = await _dbContext.VehicleModels.FindAsync(id);
+        if (model is not null)
+        {
+            _dbContext.VehicleModels.Remove(entity: model);
+            await _dbContext.SaveChangesAsync();
+        }
+    }
 
     public async Task<IEnumerable<VehicleModel>> GetModelsByMakeIdAsync(int makeId)
     {

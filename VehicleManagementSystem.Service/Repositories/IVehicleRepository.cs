@@ -20,6 +20,8 @@ public interface IVehicleRepository
 
     Task<Optional<VehicleModel>> GetModelByIdAsync(int id);
 
+    Task DeleteModelAsync(int id);
+
     Task<IEnumerable<VehicleModel>> GetModelsByMakeIdAsync(int makeId);
 
     Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortyBy, int? pageNumber, int pageSize);
