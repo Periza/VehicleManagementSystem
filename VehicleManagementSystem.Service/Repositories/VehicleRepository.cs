@@ -35,8 +35,8 @@ public class VehicleRepository : IVehicleRepository
         {
             makes = makes.Where(make => make.Name.Contains(searchString) || make.Abrv.Contains(searchString));
         }
-
-        int pageSize = 3;
+        
+        int pageSize = 5;
 
 
         return await PaginatedList<VehicleMake>.CreateAsync(source: makes, pageIndex: pageNumber ?? 1,
@@ -89,19 +89,11 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.VehicleModels.Where(m => m.MakeId == makeId).ToListAsync();
     }
 
-    public async Task<IEnumerable<VehicleModel>> GetModelsAsync(string searchTerm, string sortBy, bool ascending, int pageNumber, int pageSize)
+    public async Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber, int pageSize)
     {
-        IQueryable<VehicleModel> query = _dbContext.VehicleModels.AsQueryable();
-
-        if (!string.IsNullOrEmpty(value: searchTerm))
-            query = query.Where(m => m.Name.Contains(searchTerm));
-
-        query = sortBy switch
-        {
-            "Name" => ascending ? query.OrderBy(m => m.Name) : query.OrderByDescending(m => m.Name),
-            _ => query
-        };
-
-        return await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        IQueryable<VehicleModel> models = _dbContext.VehicleModels.AsQueryable();
+        
+        return await PaginatedList<VehicleModel>.CreateAsync(source: models, pageIndex: pageNumber ?? 1,
+            pageSize: pageSize);
     }
 }

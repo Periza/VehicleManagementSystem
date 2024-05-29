@@ -22,5 +22,5 @@ public interface IVehicleRepository
 
     Task<IEnumerable<VehicleModel>> GetModelsByMakeIdAsync(int makeId);
 
-    Task<IEnumerable<VehicleModel>> GetModelsAsync(string searchTerm, string sortyBy, bool ascending, int pageNumber, int pageSize);
+    Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortyBy, int? pageNumber, int pageSize);
 }

@@ -26,12 +26,6 @@ public class VehicleService : IVehicleService
     {
         PaginatedList<VehicleMake> makes = await _vehicleRepository.GetMakesPaginatedAsync(sortOrder: sortOrder, searchString: searchString, pageNumber: pageNumber);
         PaginatedList<VehicleMakeViewModel> paginatedMakes = _mapper.Map<PaginatedList<VehicleMakeViewModel>>(source: makes);
-        /*
-        paginatedMakes.HasNextPage = makes.HasNextPage;
-        paginatedMakes.HasPreviousPage = makes.HasPreviousPage;
-        paginatedMakes.PageIndex = makes.PageIndex;
-        paginatedMakes.TotalPages = makes.TotalPages;
-        */
         return paginatedMakes;
     }
 
@@ -78,9 +72,9 @@ public class VehicleService : IVehicleService
         return _mapper.Map<IEnumerable<VehicleModelViewModel>>(models);
     }
 
-    public async Task<IEnumerable<VehicleModelViewModel>> GetModelsAsync(string searchTerm, string sortBy, bool ascending, int pageNumber, int pageSize)
+    public async Task<IEnumerable<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int pageNumber, int pageSize)
     {
-        IEnumerable<VehicleModel> models = await _vehicleRepository.GetModelsAsync(searchTerm: searchTerm, sortyBy: sortBy,  ascending: ascending, pageNumber: pageNumber, pageSize: pageSize);
+        IEnumerable<VehicleModel> models = await _vehicleRepository.GetModelsPaginatedAsync(searchTerm: searchTerm, sortyBy: sortBy, pageNumber: pageNumber, pageSize: pageSize);
         return _mapper.Map<IEnumerable<VehicleModelViewModel>>(models);
     }
 }
