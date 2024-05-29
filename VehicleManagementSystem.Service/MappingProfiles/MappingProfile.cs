@@ -12,9 +12,7 @@ public class MappingProfile : Profile
         CreateMap<VehicleMake, VehicleMakeViewModel>().ReverseMap();
         CreateMap<VehicleModel, VehicleModelViewModel>().ReverseMap();
 
-        CreateMap(sourceType: typeof(PaginatedList<VehicleMake>), destinationType: typeof(PaginatedList<VehicleMakeViewModel>)).ConvertUsing(typeof(PaginatedListConverter<VehicleMake,VehicleMakeViewModel>));
-        
-        
-
+        CreateMap(sourceType: typeof(PaginatedList<VehicleMake>), destinationType: typeof(PaginatedList<VehicleMakeViewModel>)).ConvertUsing(typeConverterType: typeof(PaginatedListConverter<VehicleMake,VehicleMakeViewModel>));
+        CreateMap(sourceType: typeof(PaginatedList<VehicleModel>), destinationType: typeof(PaginatedList<VehicleModelViewModel>)).ConvertUsing(typeConverterType: typeof(PaginatedListConverter<VehicleModel, VehicleModelViewModel>));
     }
 }
