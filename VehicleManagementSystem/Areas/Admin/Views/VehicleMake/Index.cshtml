@@ -1,8 +1,13 @@
+@using Org.BouncyCastle.Asn1.Ocsp
 @model IEnumerable<VehicleMakeViewModel>
-
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = "Vehicle Makes";
+    string nameSort = ViewData["NameSortParam"] as string ?? "";
+    string abrvSort = ViewData["AbrvSortParam"] as string ?? "";
+    string? sortData = HttpContextAccessor.HttpContext?.Request.Query["sortOrder"];
+    
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -11,8 +16,36 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Name</th>
-        <th>Abbreviation</th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@nameSort">
+                Name
+                @{
+                    if (sortData is "name_desc")
+                    {
+                        <i class="bi bi-arrow-down"></i>
+                    }
+                    else if (sortData is "name_asc")
+                    {
+                        <i class="bi bi-arrow-up"></i>
+                    }
+                }
+            </a>
+        </th>
+        <th>
+            <a asp-action="Index" asp-route-sortOrder="@abrvSort">
+                Abbreviation
+                @{
+                    if (sortData is "abrv_desc")
+                    {
+                        <i class="bi bi-arrow-down"></i>
+                    }
+                    else if (sortData is "abrv_asc")
+                    {
+                        <i class="bi bi-arrow-up"></i>
+                    }
+                }
+            </a>
+        </th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -37,6 +70,6 @@
             </tr>
         }
     }
-        
+
     </tbody>
 </table>

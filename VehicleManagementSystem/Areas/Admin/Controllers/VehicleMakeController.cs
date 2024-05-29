@@ -20,10 +20,30 @@ public class VehicleMakeController : Controller
 
     public async Task<IActionResult> Index(string sortOrder)
     {
-        IEnumerable<VehicleMakeViewModel> models = await _vehicleService.GetAllMakesAsync();
+        
+        // Toggle sort order based on the current state
+        string nameSort = sortOrder switch
+        {
+            "name_asc" => "name_desc",
+            "name_desc" => "",
+            _ => "name_asc"
+        };
+
+        string abrvSort = sortOrder switch
+        {
+            "abrv_asc" => "abrv_desc",
+            "abrv_desc" => "",
+            _ => "abrv_asc"
+        };
+
+        ViewData["NameSortParam"] = nameSort;
+        ViewData["AbrvSortParam"] = abrvSort;
+
+        IEnumerable<VehicleMakeViewModel> models = Enumerable.Empty<VehicleMakeViewModel>();
+        
+        models = await _vehicleService.GetMakesPaginatedAsync(sortOrder: sortOrder);
         return View(models);
     }
-    
     
     public async Task<IActionResult> Upsert(int? id = null) // Update insert
     {
