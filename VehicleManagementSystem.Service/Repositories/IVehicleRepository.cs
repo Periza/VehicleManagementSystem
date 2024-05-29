@@ -6,6 +6,8 @@ public interface IVehicleRepository
 {
     Task<IEnumerable<VehicleMake>> GetAllMakesAsync();
 
+    Task<IEnumerable<VehicleMake>> GetMakesPaginatedAsync(string sortOrder);
+
     Task<Optional<VehicleMake>> GetMakeByIdAsync(int id);
 
     Task AddMakeAsync(VehicleMake make);

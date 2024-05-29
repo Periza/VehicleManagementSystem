@@ -18,6 +18,22 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.VehicleMakes.ToListAsync();
     }
 
+    public Task<IEnumerable<VehicleMake>> GetMakesPaginatedAsync(string sortOrder)
+    {
+        IQueryable<VehicleMake> makes = _dbContext.VehicleMakes.AsNoTracking().AsQueryable();
+
+        makes = sortOrder switch
+        {
+            "name_asc" => makes.OrderBy(vm => vm.Name),
+            "name_desc" => makes.OrderByDescending(vm => vm.Name),
+            "abrv_asc" => makes.OrderBy(vm => vm.Abrv),
+            "abrv_desc" => makes.OrderByDescending(vm => vm.Abrv),
+            _ => makes
+        };
+
+        return Task.FromResult(makes.AsEnumerable());
+    }
+
     public async Task<Optional<VehicleMake>> GetMakeByIdAsync(int id)
     {
         VehicleMake? make = await _dbContext.VehicleMakes.FindAsync(keyValues: id);
