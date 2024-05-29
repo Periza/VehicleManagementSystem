@@ -1,7 +1,10 @@
 @model PaginatedList<VehicleModelViewModel>
+@inject IHttpContextAccessor HttpContextAccessor
+
 
 @{
     ViewData["Title"] = "Vehicle Models";
+    string? sortBy = HttpContextAccessor.HttpContext?.Request.Query["sortBy"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -14,7 +17,19 @@
     <thead>
     <tr>
         <th>
-            Name
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.NameSortParam">
+                Name
+                @{
+                    if (sortBy is "name_desc")
+                    {
+                        <i class="bi bi-arrow-down"></i>
+                    }
+                    else if (sortBy is "name_asc")
+                    {
+                        <i class="bi bi-arrow-up"></i>
+                    }
+                }
+            </a>
         </th>
         <th>
             Abbreviation

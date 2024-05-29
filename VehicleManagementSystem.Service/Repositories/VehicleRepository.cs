@@ -114,6 +114,17 @@ public class VehicleRepository : IVehicleRepository
     public async Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber, int pageSize)
     {
         IQueryable<VehicleModel> models = _dbContext.VehicleModels.Include(navigationPropertyPath: vm => vm.Make).AsQueryable();
+
+        models = sortBy switch
+        {
+            "name_asc" => models.OrderBy(vm => vm.Name),
+            "name_desc" => models.OrderByDescending(vm => vm.Name),
+            "abrv_asc" => models.OrderBy(vm => vm.Abrv),
+            "abrv_desc" => models.OrderByDescending(vm => vm.Abrv),
+            "make_asc" => models.OrderBy(vm => vm.Make.Name),
+            "make_desc" => models.OrderByDescending(vm => vm.Make.Name),
+            _ => models
+        };
         
         return await PaginatedList<VehicleModel>.CreateAsync(source: models, pageIndex: pageNumber ?? 1,
             pageSize: pageSize);

@@ -17,9 +17,34 @@ public class VehicleModelController : Controller
         _vehicleService = vehicleService;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string sortBy)
     {
-        return View(model: await _vehicleService.GetModelsPaginatedAsync("", "",1, 5));
+        //SORTING
+        // Toggle sort order based on the current state
+        string nameSort = sortBy switch
+        {
+            "name_asc" => "name_desc",
+            "name_desc" => "",
+            _ => "name_asc"
+        };
+
+        string abrvSort = sortBy switch
+        {
+            "abrv_asc" => "abrv_desc",
+            "abrv_desc" => "",
+            _ => "abrv_asc"
+        };
+
+        string makeSort = sortBy switch
+        {
+            "make_asc" => "make_desc",
+            "make_desc" => "",
+            _ => "make_desc"
+        };
+
+        ViewBag.NameSortParam = nameSort;
+        
+        return View(model: await _vehicleService.GetModelsPaginatedAsync("", sortBy: sortBy,1, 20));
     }
 
     public async Task<IActionResult> Upsert(int? id = null) // Update insert
