@@ -6,3 +6,44 @@
 
 <h1>@ViewData["Title"]</h1>
 
+<table class="table">
+    <thead>
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Abbreviation
+        </th>
+        <th>
+            Make
+        </th>
+        <th>
+            Actions
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+        @if (Model.IsNullOrEmpty())
+        {
+            <tr>
+                <td colspan="3" class="text-center">No vehicle models available</td>
+            </tr>
+        }
+        else
+        {
+            @foreach (VehicleModelViewModel item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Abrv</td>
+                    <td>@item.Make.Name</td>
+                    <td>
+                        <a asp-controller="VehicleModel" class="btn btn-primary">Edit</a>
+                        <a asp-controller="VehicleModel" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

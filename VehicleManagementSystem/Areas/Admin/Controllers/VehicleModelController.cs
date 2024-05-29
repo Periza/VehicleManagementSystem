@@ -17,7 +17,22 @@ public class VehicleModelController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(model: await _vehicleService.GetModelsPaginatedAsync("", "",1, 1));
+        return View(model: await _vehicleService.GetModelsPaginatedAsync("", "",1, 5));
+    }
+
+    public async Task<IActionResult> Delete(int id)
+    {
+        try
+        {
+            await _vehicleService.DeleteModelAsync(id: id);
+            TempData["success"] = "Vehicle Model deleted successfully";
+        }
+        catch
+        {
+            TempData["error"] = "Error while deleting vehicle make";
+        }
+
+        return RedirectToAction(actionName: nameof(Index));
     }
     
 }
