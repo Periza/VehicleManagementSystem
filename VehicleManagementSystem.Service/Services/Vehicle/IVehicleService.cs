@@ -14,5 +14,5 @@ public interface IVehicleService
     Task<IEnumerable<VehicleModelViewModel>> GetAllModelsAsync();
     Task<Optional<VehicleModelViewModel>> GetModelByIdAsync(int id);
     Task<IEnumerable<VehicleModelViewModel>> GetModelsByMakeIdAsync(int makeId);
-    Task<IEnumerable<VehicleModelViewModel>> GetModelsAsync(string searchTerm, string sortBy, bool ascending, int pageNumber, int pageSize);
+    Task<PaginatedList<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int pageNumber, int pageSize);
 }
