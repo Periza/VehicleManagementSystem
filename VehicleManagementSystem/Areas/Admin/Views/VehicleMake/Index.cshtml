@@ -1,5 +1,4 @@
-@using Org.BouncyCastle.Asn1.Ocsp
-@model IEnumerable<VehicleMakeViewModel>
+@model VehicleManagementSystem.Service.PaginatedList<VehicleMakeViewModel>
 @inject IHttpContextAccessor HttpContextAccessor
 
 @{
@@ -8,6 +7,7 @@
     string abrvSort = ViewData["AbrvSortParam"] as string ?? "";
     string? sortOrder = HttpContextAccessor.HttpContext?.Request.Query["sortOrder"];
     string? currentFilter = HttpContextAccessor.HttpContext?.Request.Query["searchString"];
+    string? currentPageNumber = HttpContextAccessor.HttpContext?.Request.Query["pageNumber"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -28,7 +28,7 @@
     <thead>
     <tr>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@nameSort" asp-route-searchString="@currentFilter">
+            <a asp-action="Index" asp-route-sortOrder="@nameSort" asp-route-searchString="@currentFilter" asp-route-pageNumber="@currentPageNumber">
                 Name
                 @{
                     if (sortOrder is "name_desc")
@@ -43,7 +43,7 @@
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortOrder="@abrvSort" asp-route-searchString="@currentFilter">
+            <a asp-action="Index" asp-route-sortOrder="@abrvSort" asp-route-searchString="@currentFilter" asp-route-pageNumber="@currentPageNumber">
                 Abbreviation
                 @{
                     if (sortOrder is "abrv_desc")
@@ -84,3 +84,25 @@
 
     </tbody>
 </table>
+
+@{
+    string prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@(ViewData["CurrentFilter"])}"
+   class="btn btn-default @prevDisabled"
+>
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

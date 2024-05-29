@@ -26,10 +26,12 @@ public class VehicleService : IVehicleService
     {
         PaginatedList<VehicleMake> makes = await _vehicleRepository.GetMakesPaginatedAsync(sortOrder: sortOrder, searchString: searchString, pageNumber: pageNumber);
         PaginatedList<VehicleMakeViewModel> paginatedMakes = _mapper.Map<PaginatedList<VehicleMakeViewModel>>(source: makes);
+        /*
         paginatedMakes.HasNextPage = makes.HasNextPage;
         paginatedMakes.HasPreviousPage = makes.HasPreviousPage;
         paginatedMakes.PageIndex = makes.PageIndex;
         paginatedMakes.TotalPages = makes.TotalPages;
+        */
         return paginatedMakes;
     }
 

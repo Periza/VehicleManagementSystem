@@ -10,5 +10,18 @@ public class MappingProfile : Profile
     {
         CreateMap<VehicleMake, VehicleMakeViewModel>().ReverseMap();
         CreateMap<VehicleModel, VehicleModelViewModel>().ReverseMap();
+
+        CreateMap<PaginatedList<VehicleMake>, PaginatedList<VehicleMakeViewModel>>()
+            .ConvertUsing(mappingFunction: (src, dest, context) => new PaginatedList<VehicleMakeViewModel>(
+                items: context.Mapper.Map<List<VehicleMakeViewModel>>(source: src.ToList()),
+                src.Count,
+                src.PageIndex,
+                pageSize: src.TotalPages
+            )
+            {
+                HasNextPage = src.HasNextPage,
+                HasPreviousPage = src.HasPreviousPage
+            });
+
     }
 }
