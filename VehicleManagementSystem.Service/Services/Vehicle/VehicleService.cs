@@ -22,6 +22,12 @@ public class VehicleService : IVehicleService
         return _mapper.Map<IEnumerable<VehicleMakeViewModel>>(source: makes);
     }
 
+    public async Task<IEnumerable<VehicleMakeViewModel>> GetMakesPaginatedAsync(string sortOrder)
+    {
+        IEnumerable<VehicleMake> makes = await _vehicleRepository.GetMakesPaginatedAsync(sortOrder: sortOrder);
+        return _mapper.Map<IEnumerable<VehicleMakeViewModel>>(source: makes);
+    }
+
     public async Task<Optional<VehicleMakeViewModel>> GetMakeByIdAsync(int id)
     {
         Optional<VehicleMake> makeOptional = await _vehicleRepository.GetMakeByIdAsync(id: id);
