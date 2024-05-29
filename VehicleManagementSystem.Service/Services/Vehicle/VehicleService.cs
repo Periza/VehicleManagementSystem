@@ -66,6 +66,11 @@ public class VehicleService : IVehicleService
 
     }
 
+    public async Task DeleteModelAsync(int id)
+    {
+        await _vehicleRepository.DeleteModelAsync(id: id);
+    }
+
     public async Task<IEnumerable<VehicleModelViewModel>> GetModelsByMakeIdAsync(int makeId)
     {
         IEnumerable<VehicleModel> models = await _vehicleRepository.GetModelsByMakeIdAsync(makeId: makeId);
