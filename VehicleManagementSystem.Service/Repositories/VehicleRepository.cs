@@ -51,7 +51,7 @@ public class VehicleRepository : IVehicleRepository
 
     public async Task AddMakeAsync(VehicleMake make)
     {
-        _dbContext.VehicleMakes.Add(entity: make);
+        await _dbContext.VehicleMakes.AddAsync(entity: make);
         await _dbContext.SaveChangesAsync();
     }
 
@@ -82,6 +82,12 @@ public class VehicleRepository : IVehicleRepository
     {
         VehicleModel? model = await _dbContext.VehicleModels.FindAsync(id);
         return model is not null ? Optional<VehicleModel>.Of(model) : Optional<VehicleModel>.Empty();
+    }
+
+    public async Task AddModelAsync(VehicleModel vehicleModel)
+    {
+        await _dbContext.VehicleModels.AddAsync(entity: vehicleModel);
+        await _dbContext.SaveChangesAsync();
     }
     
     public async Task DeleteModelAsync(int id)

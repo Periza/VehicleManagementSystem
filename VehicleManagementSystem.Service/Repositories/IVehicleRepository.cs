@@ -20,6 +20,8 @@ public interface IVehicleRepository
 
     Task<Optional<VehicleModel>> GetModelByIdAsync(int id);
 
+    Task AddModelAsync(VehicleModel vehicleModel);
+
     Task DeleteModelAsync(int id);
 
     Task<IEnumerable<VehicleModel>> GetModelsByMakeIdAsync(int makeId);
