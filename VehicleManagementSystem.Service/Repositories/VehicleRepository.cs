@@ -89,6 +89,12 @@ public class VehicleRepository : IVehicleRepository
         await _dbContext.VehicleModels.AddAsync(entity: vehicleModel);
         await _dbContext.SaveChangesAsync();
     }
+
+    public async Task UpdateModelAsync(VehicleModel vehicleModel)
+    {
+        _dbContext.VehicleModels.Update(entity: vehicleModel);
+        await _dbContext.SaveChangesAsync();
+    }
     
     public async Task DeleteModelAsync(int id)
     {
