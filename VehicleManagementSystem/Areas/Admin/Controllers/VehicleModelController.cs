@@ -43,6 +43,7 @@ public class VehicleModelController : Controller
         };
 
         ViewBag.NameSortParam = nameSort;
+        ViewBag.AbrvSortParam = abrvSort;
         
         return View(model: await _vehicleService.GetModelsPaginatedAsync("", sortBy: sortBy,1, 20));
     }
