@@ -1,0 +1,28 @@
+@model VehicleMakeViewModel
+
+@{
+    ViewData["Title"] = $"{(Model.Id is 0 ? "Create" : "Update")} Vehicle Make";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Upsert">
+    <input asp-for="Id" hidden />
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Abrv" class="form-label"></label>
+        <input asp-for="Abrv" class="form-control"/>
+        <span asp-validation-for="Abrv" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary form-control">
+        @(Model.Id != 0 ? "Update" : "Create")
+    </button>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
