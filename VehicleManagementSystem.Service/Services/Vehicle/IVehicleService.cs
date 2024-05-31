@@ -19,5 +19,5 @@ public interface IVehicleService
     Task UpdateModelAsync(VehicleModelViewModel vmViewModel);
     Task DeleteModelAsync(int id);
     Task<IEnumerable<VehicleModelViewModel>> GetModelsByMakeIdAsync(int makeId);
-    Task<PaginatedList<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int pageNumber, int pageSize);
+    Task<PaginatedList<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber);
 }

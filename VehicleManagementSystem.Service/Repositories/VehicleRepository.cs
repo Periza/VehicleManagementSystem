@@ -111,7 +111,7 @@ public class VehicleRepository : IVehicleRepository
         return await _dbContext.VehicleModels.Where(m => m.MakeId == makeId).ToListAsync();
     }
 
-    public async Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber, int pageSize)
+    public async Task<PaginatedList<VehicleModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber)
     {
         IQueryable<VehicleModel> models = _dbContext.VehicleModels.Include(navigationPropertyPath: vm => vm.Make).AsQueryable();
 
@@ -130,6 +130,8 @@ public class VehicleRepository : IVehicleRepository
         {
             models = models.Where(model => model.Name.Contains(searchTerm) || model.Abrv.Contains(searchTerm) || model.Make.Name.Contains(searchTerm));
         }
+
+        int pageSize = 5;
         
         return await PaginatedList<VehicleModel>.CreateAsync(source: models, pageIndex: pageNumber ?? 1,
             pageSize: pageSize);

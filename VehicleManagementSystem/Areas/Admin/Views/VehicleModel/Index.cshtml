@@ -79,26 +79,48 @@
     </tr>
     </thead>
     <tbody>
-        @if (Model.IsNullOrEmpty())
+    @if (Model.IsNullOrEmpty())
+    {
+        <tr>
+            <td colspan="3" class="text-center">No vehicle models available</td>
+        </tr>
+    }
+    else
+    {
+        @foreach (VehicleModelViewModel item in Model)
         {
             <tr>
-                <td colspan="3" class="text-center">No vehicle models available</td>
+                <td>@item.Name</td>
+                <td>@item.Abrv</td>
+                <td>@item.Make.Name</td>
+                <td>
+                    <a asp-controller="VehicleModel" asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
+                    <a asp-controller="VehicleModel" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         }
-        else
-        {
-            @foreach (VehicleModelViewModel item in Model)
-            {
-                <tr>
-                    <td>@item.Name</td>
-                    <td>@item.Abrv</td>
-                    <td>@item.Make.Name</td>
-                    <td>
-                        <a asp-controller="VehicleModel" asp-action="Upsert" asp-route-id="@item.Id" class="btn btn-primary">Edit</a>
-                        <a asp-controller="VehicleModel" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-                    </td>
-                </tr>
-            }
-        }
+    }
     </tbody>
 </table>
+
+@{
+    string prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    string nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-sortOrder="@sortBy"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@currentFilter)}"
+   class="btn btn-default @prevDisabled"
+>
+    Previous
+</a>
+
+<a asp-action="Index"
+   asp-route-sortOrder="@sortBy"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@currentFilter"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

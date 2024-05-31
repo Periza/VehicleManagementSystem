@@ -88,9 +88,9 @@ public class VehicleService : IVehicleService
         return _mapper.Map<IEnumerable<VehicleModelViewModel>>(models);
     }
 
-    public async Task<PaginatedList<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int pageNumber, int pageSize)
+    public async Task<PaginatedList<VehicleModelViewModel>> GetModelsPaginatedAsync(string searchTerm, string sortBy, int? pageNumber)
     {
-        PaginatedList<VehicleModel> models = await _vehicleRepository.GetModelsPaginatedAsync(searchTerm: searchTerm, sortyBy: sortBy, pageNumber: pageNumber, pageSize: pageSize);
+        PaginatedList<VehicleModel> models = await _vehicleRepository.GetModelsPaginatedAsync(searchTerm: searchTerm, sortyBy: sortBy, pageNumber: pageNumber);
         return _mapper.Map<PaginatedList<VehicleModelViewModel>>(models);
     }
 }
