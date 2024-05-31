@@ -6,6 +6,7 @@
     ViewData["Title"] = "Vehicle Models";
     string? sortBy = HttpContextAccessor.HttpContext?.Request.Query["sortBy"];
     string? currentFilter = HttpContextAccessor.HttpContext?.Request.Query["searchTerm"];
+    string? currentPageNumber = HttpContextAccessor.HttpContext?.Request.Query["pageNumber"];
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -29,7 +30,7 @@
     <thead>
     <tr>
         <th>
-            <a asp-action="Index" asp-route-sortBy="@ViewBag.NameSortParam" asp-route-searchTerm="@currentFilter">
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.NameSortParam" asp-route-searchTerm="@currentFilter" asp-route-pageNumber="@currentPageNumber">
                 Name
                 @{
                     if (sortBy is "name_desc")
@@ -44,7 +45,7 @@
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortBy="@ViewBag.AbrvSortParam" asp-route-searchTerm="@currentFilter">
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.AbrvSortParam" asp-route-searchTerm="@currentFilter" asp-route-pageNumber="@currentPageNumber">
                 Abbreviation
                 @{
                     if (sortBy is "abrv_desc")
@@ -59,7 +60,7 @@
             </a>
         </th>
         <th>
-            <a asp-action="Index" asp-route-sortBy="@ViewBag.MakeSortParam" asp-route-searchTerm="@currentFilter">
+            <a asp-action="Index" asp-route-sortBy="@ViewBag.MakeSortParam" asp-route-searchTerm="@currentFilter" asp-route-pageNumber="@currentPageNumber">
                 Make
                 @{
                     if (sortBy is "make_desc")
@@ -109,18 +110,18 @@
 }
 
 <a asp-action="Index"
-   asp-route-sortOrder="@sortBy"
+   asp-route-sortBy="@sortBy"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
-   asp-route-currentFilter="@currentFilter)}"
+   asp-route-searchTerm="@currentFilter)}"
    class="btn btn-default @prevDisabled"
 >
     Previous
 </a>
 
 <a asp-action="Index"
-   asp-route-sortOrder="@sortBy"
+   asp-route-sortBy="@sortBy"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
-   asp-route-currentFilter="@currentFilter"
+   asp-route-searchTerm="@currentFilter"
    class="btn btn-default @nextDisabled">
     Next
 </a>
