@@ -17,7 +17,7 @@ public class VehicleModelController : Controller
         _vehicleService = vehicleService;
     }
 
-    public async Task<IActionResult> Index(string sortBy)
+    public async Task<IActionResult> Index(string searchTerm, string sortBy)
     {
         //SORTING
         // Toggle sort order based on the current state
@@ -46,7 +46,7 @@ public class VehicleModelController : Controller
         ViewBag.AbrvSortParam = abrvSort;
         ViewBag.MakeSortParam = makeSort;
         
-        return View(model: await _vehicleService.GetModelsPaginatedAsync("", sortBy: sortBy,1, 20));
+        return View(model: await _vehicleService.GetModelsPaginatedAsync(searchTerm: searchTerm, sortBy: sortBy,pageNumber: 1, pageSize: 20));
     }
 
     public async Task<IActionResult> Upsert(int? id = null) // Update insert

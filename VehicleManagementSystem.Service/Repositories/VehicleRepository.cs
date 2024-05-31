@@ -125,6 +125,11 @@ public class VehicleRepository : IVehicleRepository
             "make_desc" => models.OrderByDescending(vm => vm.Make.Name),
             _ => models
         };
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            models = models.Where(model => model.Name.Contains(searchTerm) || model.Abrv.Contains(searchTerm) || model.Make.Name.Contains(searchTerm));
+        }
         
         return await PaginatedList<VehicleModel>.CreateAsync(source: models, pageIndex: pageNumber ?? 1,
             pageSize: pageSize);
