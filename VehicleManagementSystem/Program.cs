@@ -25,8 +25,8 @@ builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddDbContext<ApplicationDbContext>(optionsAction: options =>
 {
-    options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
-    // options.UseInMemoryDatabase(databaseName: "InMemoryDb");
+    // options.UseSqlServer(connectionString: builder.Configuration.GetConnectionString(name: "Default"));
+    options.UseInMemoryDatabase(databaseName: "InMemoryDb");
 });
 
 builder.Services.AddRazorPages();
