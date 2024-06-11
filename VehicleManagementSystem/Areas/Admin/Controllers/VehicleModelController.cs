@@ -62,9 +62,10 @@ public class VehicleModelController : Controller
         }
 
         Optional<VehicleModelViewModel> vmOptional = await _vehicleService.GetModelByIdAsync(id: id.Value);
-        vmOptional.Value.AvaiableMakes = avaiableMakes;
         if (!vmOptional.HasValue)
             return NotFound();
+        vmOptional.Value.AvaiableMakes = avaiableMakes;
+        
 
         return View(vmOptional.Value);
     }

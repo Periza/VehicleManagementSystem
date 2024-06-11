@@ -65,9 +65,12 @@ using (var scope = app.Services.CreateScope())
     context.Database.EnsureCreated(); // This will trigger OnModelCreating
 }
 
+app.UseStatusCodePagesWithReExecute(pathFormat: "/Error/{0}");
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+
 
 app.UseRouting();
 
